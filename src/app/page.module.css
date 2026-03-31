@@ -1,142 +1,141 @@
 .page {
-  --background: #fafafa;
-  --foreground: #fff;
-
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
+  position: relative;
+  min-height: 100vh;
+  background: #ffffff;
+  color: var(--foreground);
+  padding: clamp(72px, 12vh, 93px) clamp(20px, 4vw, 28px) 48px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
-.main {
+.topRow {
   display: flex;
-  flex: 1;
-  width: 100%;
-  max-width: 800px;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
   justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
+  gap: clamp(24px, 5vw, 64px);
+  width: 100%;
+  margin-bottom: clamp(32px, 5vh, 48px);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+  gap: 6px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: normal;
+}
+
+.navLink {
+  white-space: nowrap;
+  text-decoration: none;
+  opacity: 0.65;
+  transition: opacity 0.2s ease;
+}
+
+.navLink:hover {
+  opacity: 1;
 }
 
 .intro {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  text-align: left;
-  gap: 24px;
-}
-
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
-}
-
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
-}
-
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.ctas {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
   gap: 16px;
-  font-size: 14px;
+  max-width: min(90vw, 720px);
+  flex: 1;
+  min-width: 0;
 }
 
-.ctas a {
-  display: flex;
-  justify-content: center;
+.title {
+  font-family: var(--font-crimson-pro), "Times New Roman", serif;
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #000000;
+}
+
+.titleLine {
+  display: block;
+}
+
+.titleWithShapes {
+  display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
+  gap: clamp(10px, 2vw, 24px);
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
+.titleSecond {
+  white-space: nowrap;
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+.shapesWrap {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
+.shapes {
+  display: block;
+  width: min(184px, 42vw);
+  height: auto;
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
-  }
-
-  .intro {
-    gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
+.projectsList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vh, 40px);
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
+.projectsItem {
+  margin: 0;
+  padding: 0;
+}
+
+.projectLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+}
+
+.projectLink:focus-visible {
+  outline: 2px solid #1fad60;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.modalWrap {
+  width: 100%;
+  max-width: 448px;
+}
+
+.projectPreview {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 640px) {
+  .topRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav {
+    align-items: flex-start;
   }
 
   .page {
-    --background: #000;
-    --foreground: #000;
-
-    --text-primary: #ededed;
-    --text-secondary: #999;
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
+    padding-top: 40px;
   }
 }
