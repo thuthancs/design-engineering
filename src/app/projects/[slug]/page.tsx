@@ -1,4 +1,3 @@
-import arrowIcon from "@/app/assets/arrow_icon.svg";
 import {
   getAllProjectSlugs,
   getProjectBySlug,
@@ -43,14 +42,7 @@ export default async function ProjectPage({ params }: Props) {
     <div className={styles.shell}>
       <aside className={styles.sidebar}>
         <Link className={styles.back} href="/">
-          <Image
-            src={arrowIcon}
-            alt=""
-            width={18}
-            height={18}
-            className={styles.backArrow}
-            aria-hidden
-          />
+          <span aria-hidden>←</span>
           <span>BACK</span>
         </Link>
         <nav className={styles.sideNav} aria-label="On this page">

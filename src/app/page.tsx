@@ -1,8 +1,8 @@
+import { getAllProjects } from "@/data/projects";
 import Image from "next/image";
 import Link from "next/link";
 import basicShapes from "./assets/basic_shapes.svg";
 import { ProjectCard } from "./components/ProjectCard";
-import { getAllProjects } from "@/data/projects";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -32,20 +32,23 @@ export default function Home() {
           </h1>
         </header>
 
-        <nav className={styles.nav} aria-label="Social links">
+        <nav className={styles.nav} aria-label="Site and social links">
+          <Link className={styles.navLink} href="/about">
+            ABOUT
+          </Link>
+          <a className={styles.navLink} href="#">
+            GITHUB
+          </a>
           <a className={styles.navLink} href="#">
             WEBSITE
           </a>
           <a className={styles.navLink} href="#">
             LINKEDIN
           </a>
-          <a className={styles.navLink} href="#">
-            GITHUB
-          </a>
         </nav>
       </div>
 
-      <ul className={styles.projectsList}>
+      <ul id="work" className={styles.projectsList}>
         {projects.map((project, index) => (
           <li key={project.slug} className={styles.projectsItem}>
             <Link
