@@ -36,15 +36,25 @@ export default function Home() {
           <Link className={styles.navLink} href="/about">
             ABOUT
           </Link>
-          <a className={styles.navLink} href="#">
+          <a
+            className={styles.navLink}
+            href="https://github.com/thuthancs"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             GITHUB
           </a>
-          <a className={styles.navLink} href="#">
+          <a
+            className={styles.navLink}
+            href="https://www.thuinanutshell.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             WEBSITE
           </a>
-          <a className={styles.navLink} href="#">
-            LINKEDIN
-          </a>
+          <Link className={styles.navLink} href="/playground">
+            PLAYGROUND
+          </Link>
         </nav>
       </div>
 
