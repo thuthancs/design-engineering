@@ -1,6 +1,7 @@
 import desktopSignup from "@/app/assets/desktop_signup.png";
 import mobileSignup from "@/app/assets/mobile_signup.png";
 import signupModal from "@/app/assets/signup_modal.svg";
+import signupPreviewGif from "@/app/assets/signup_preview.gif";
 import signupV0 from "@/app/assets/signup_v0.svg";
 import signupV1 from "@/app/assets/signup_v1.svg";
 import type { StaticImageData } from "next/image";
@@ -10,6 +11,13 @@ export type ProjectPreview = {
   width: number;
   height: number;
   alt: string;
+  /** Pass through to next/image — use for animated GIFs so frames are preserved. */
+  unoptimized?: boolean;
+  /**
+   * Crop the asset to the same 448×515 frame as signup_modal.svg (object-fit: cover).
+   * Set width/height to 448 and 515 when using this.
+   */
+  cropModalFrame?: boolean;
 };
 
 /** Anchor id must be URL-safe (used in #hash links). */
@@ -28,6 +36,12 @@ export type InlinePreview = {
   images: ProjectPreview[];
 };
 
+/** Extra media under a section; optional copy beside the GIF on wide screens. */
+export type SectionInlinePreviewBlock = {
+  images: ProjectPreview[];
+  asideText?: string;
+};
+
 export type Project = {
   slug: string;
   day: number;
@@ -42,6 +56,8 @@ export type Project = {
   detailGalleryCaption?: string;
   /** Optional black-background side-by-side preview under a section title. */
   inlinePreview?: InlinePreview;
+  /** Media (and optional aside copy) keyed by `section.id`, after that section’s body. */
+  sectionInlinePreviews?: Record<string, SectionInlinePreviewBlock>;
   /** Long-form sections for the detail page (sidebar + anchors). */
   sections: ProjectSection[];
 };
@@ -55,10 +71,12 @@ export const projects: Project[] = [
     summary:
       "A minimal sign-up surface with name fields, email, password, primary action, and social sign-in. I built this as the first Daily UI challenge.",
     preview: {
-      src: signupModal,
+      src: signupPreviewGif,
       width: 448,
       height: 515,
       alt: "Sign up form — Day 1, Daily UI Challenge",
+      unoptimized: true,
+      cropModalFrame: true,
     },
     detailGallery: [
       {
@@ -82,6 +100,25 @@ export const projects: Project[] = [
     ],
     detailGalleryCaption:
       "From left to right (v0, v1, final).",
+    sectionInlinePreviews: {
+      Prototype: {
+        asideText: `I created the signup page prototype on Iphone 13 frame and got to practice creating components and their variants.
+
+For example, a button has 3 states: default, hover, and loading. Input fields have 2 states: default and focused.
+
+Instead of repeating myself, I could create a component with those variants and create instances everywhere else.`,
+        images: [
+          {
+            src: signupPreviewGif,
+            width: 448,
+            height: 515,
+            alt: "Interactive prototype — mobile signup flow",
+            unoptimized: true,
+            cropModalFrame: true,
+          },
+        ],
+      },
+    },
     inlinePreview: {
       sectionId: "overview",
       images: [
@@ -104,45 +141,52 @@ export const projects: Project[] = [
         id: "design-iteration",
         title: "Design Iteration",
         paragraphs: [
-          "The challenge sounded simple at first but it was actually harder than I expected. I started out with the most simple and naive solution I could think of by stacking the input fields on top of each other. There was no options for social media login, either. In terms of visual, I first used 8px for rounding the corners so the initial versions look pretty sharp.",
-          "My judgement was that this was a good start but it did not feel right. So, I leaned into that intuition and started poking into other well-established signup designs. I checked out Claude, ChatGPT, and some signup UI on Mobbin and here is what I noticed:"
+          "The challenge sounded simple at first, but it was harder than expected. I started with a very naive version: stacked fields, no social sign-in, and tighter 8px corner radii that felt too sharp.",
+          "After reviewing established flows (Claude, ChatGPT, examples on Mobbin), a few patterns stood out:",
         ],
         bullets: [
           {
             label: "Rounded corners",
-            text: "Most designs use rounded corners of 16-24px and very thin border thickness. The thickness only increases when the user clicks on the input field (focused mode).",
+            text: "Most interfaces use 16-24px radii with very thin borders, then increase emphasis only in focused states.",
           },
           {
             label: "Grouping",
-            text: "If information is of the same type (e.g., names), they can be grouped together like first name and last name on the same row.",
+            text: "Related data can be grouped, such as first name and last name on the same row.",
           },
           {
             label: "Email-first",
-            text: "It seems like the apps I looked into try to reduce the number of input fields as much as possible by asking users to continue with Email. This might make the onboarding process quicker.",
+            text: "Many flows reduce perceived effort by leading with email and progressive steps.",
           },
           {
             label: "Social sign-in",
-            text: "Most designs have a social sign-in option. This is a great way to reduce the number of input fields as much as possible by asking users to continue with Email. This might make the onboarding process quicker.",
+            text: "A social option is common and helps reduce friction for onboarding.",
           },
         ],
       },
       {
-        id: "rounded-corners",
+        id: "why-rounded-corners",
         title: "Why Rounded Corners?",
         paragraphs: [
-          "Rounded corners are a great way to add a modern and clean look to a design. They are also a great way to add a sense of warmth and friendliness to a design.",
+          'According to Chuquichambi, Erick G., et al. (2022) (https://pubmed.ncbi.nlm.nih.gov/36285721/), contour (or the outer lines that define the shape of an object) can determine whether an object is pleasing or displeasing from the human perspective. People perceive curvilinear form as more pleasant than angular forms. This makes sense because given human evolution, we often associate hard and sharp things like knifes, or weapons as something threatening.',
         ],
       },
       {
         id: "Prototype",
         title: "Prototype",
-        paragraphs: ["I created a prototype of the signup page using Figma."],
+        paragraphs: [],
+      },
+      {
+        id: "reflection",
+        title: "Reflection",
+        paragraphs: [
+          "Planning is VERY important. Of course, you should not be stuck in planning for too long without execution but sketching the flow or the interface on a piece of paper before opening Figma can be beneficial. I jumped into Figma way too soon and there were things I only realized along the way, especially during the prototyping process. I realized there's actualy a lot going on with just a \"simple\" signup/sign in flow. For example, there should be a success state when the user successfully signs up, the failure state when they fill out information that does not meet the requirements, or the loading state. By the time I noticed this, my Figma was too messy and it was a pain to reorganize stuff and figure out what's to go next from the current state.",
+        ],
       },
       {
         id: "inspiration",
         title: "Inspiration",
         paragraphs: [
-          "I was inspired by the design of the signup page from the Daily UI Challenge. [Montek](https://dribbble.com/shots/20632011--Montek-Sign-In-Sign-Up-Screens?utm_source=Clipboard_Shot&utm_campaign=asaldesign&utm_content=%C2%A0Montek%20-%20Sign%20In%20%26%20Sign%20Up%20Screens&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=asaldesign&utm_content=%C2%A0Montek%20-%20Sign%20In%20%26%20Sign%20Up%20Screens&utm_medium=Social_Share)",
+          "Montek — Sign In & Sign Up Screens: https://dribbble.com/shots/20632011--Montek-Sign-In-Sign-Up-Screens",
         ],
       },
     ],

@@ -10,6 +10,7 @@ import {
   loadProjectMarkdownSections,
   normalizeSectionKey,
 } from "@/lib/projectMarkdown";
+import projectCardStyles from "@/app/components/ProjectCard.module.css";
 import styles from "./page.module.css";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -121,8 +122,14 @@ export default async function ProjectPage({ params }: Props) {
               alt={project.preview.alt}
               width={project.preview.width}
               height={project.preview.height}
-              className={styles.preview}
+              className={[
+                styles.preview,
+                project.preview.cropModalFrame && projectCardStyles.imageCropModal,
+              ]
+                .filter(Boolean)
+                .join(" ")}
               priority
+              unoptimized={project.preview.unoptimized}
             />
           )}
         </figure>
@@ -161,6 +168,44 @@ export default async function ProjectPage({ params }: Props) {
                 ) : null}
               </>
             )}
+            {project.sectionInlinePreviews?.[section.id] ? (
+              <div
+                className={
+                  project.sectionInlinePreviews[section.id].asideText
+                    ? styles.sectionInlinePreviewRow
+                    : styles.sectionInlinePreviewStack
+                }
+              >
+                <div className={styles.sectionInlinePreviewMedia}>
+                  {project.sectionInlinePreviews[section.id].images.map((img, i) => (
+                    <div
+                      key={`${section.id}-inline-${i}`}
+                      className={styles.sectionInlinePreviewFrame}
+                    >
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        width={img.width}
+                        height={img.height}
+                        className={[
+                          styles.sectionInlinePreviewImage,
+                          img.cropModalFrame && projectCardStyles.imageCropModal,
+                        ]
+                          .filter(Boolean)
+                          .join(" ")}
+                        sizes="(max-width: 900px) 90vw, 448px"
+                        unoptimized={img.unoptimized}
+                      />
+                    </div>
+                  ))}
+                </div>
+                {project.sectionInlinePreviews[section.id].asideText ? (
+                  <p className={styles.sectionInlinePreviewAside}>
+                    {project.sectionInlinePreviews[section.id].asideText}
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
           </section>
         ))}
       </main>

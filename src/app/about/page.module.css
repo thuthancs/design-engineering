@@ -115,7 +115,7 @@
 }
 
 .cvCol .timeline + .sectionLabel {
-  margin-top: clamp(1.15rem, 2vw, 1.5rem);
+  margin-top: clamp(2rem, 3.5vw, 2.5rem);
 }
 
 .timeline {

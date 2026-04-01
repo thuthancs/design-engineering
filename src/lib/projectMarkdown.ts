@@ -4,6 +4,18 @@ import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkHtml from "remark-html";
 
+/** Add target="_blank" to <a> tags from remark-html (safe for same-page # links too). */
+function addTargetBlankToAnchors(html: string): string {
+  return html.replace(/<a\b([^>]*)>/gi, (full, attrs: string) => {
+    if (/\btarget\s*=/i.test(attrs)) return full;
+    const t = attrs.trim();
+    const inner = t
+      ? `${t} target="_blank" rel="noopener noreferrer"`
+      : `target="_blank" rel="noopener noreferrer"`;
+    return `<a ${inner}>`;
+  });
+}
+
 function normalizeSectionKey(input: string): string {
   return input
     .trim()
@@ -54,7 +66,7 @@ export async function loadProjectMarkdownSections(
   const result: Record<string, string> = {};
   for (const section of sections) {
     const html = await remark().use(remarkGfm).use(remarkHtml).process(section.body);
-    result[section.key] = String(html);
+    result[section.key] = addTargetBlankToAnchors(String(html));
   }
   return result;
 }

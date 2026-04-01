@@ -3,6 +3,7 @@
   display: block;
   width: 100%;
   max-width: 448px;
+  overflow: hidden;
   cursor: none;
 }
 
@@ -17,6 +18,13 @@
   height: auto;
   pointer-events: none;
   user-select: none;
+}
+
+/** Same aspect and max width as signup_modal.svg — use with object-fit cover for GIFs. */
+.imageCropModal {
+  aspect-ratio: 448 / 515;
+  object-fit: cover;
+  object-position: center;
 }
 
 .dimOverlay {

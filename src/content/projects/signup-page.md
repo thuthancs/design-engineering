@@ -11,11 +11,19 @@ After reviewing established flows (Claude, ChatGPT, examples on Mobbin), a few p
 
 ## Why Rounded Corners?
 
-Rounded corners help the form feel modern and approachable, while still keeping the interface clean and structured.
+According to [Chuquichambi, Erick G., et al. (2022)](https://pubmed.ncbi.nlm.nih.gov/36285721/), contour (or the outer lines that define the shape of an object) can determine whether an object is pleasing or displeasing from the human perspective. People perceive curvilinear form as more pleasant than angular forms. This makes sense because given human evolution, we often associate hard and sharp things like knifes, or weapons as something threatening.
 
 ## Prototype
 
-I created a prototype of the signup page in Figma.
+## Reflection
+
+- Planning is VERY important. Of course, you should not be stuck in planning for too long without execution but sketching the flow or the interface on a piece of paper before opening Figma can be beneficial. I jumped into Figma way too soon and there were things I only realized along the way, especially during the prototyping process. I realized there's actualy a lot going on with just a "simple" signup/sign in flow. For example, there should be a success state when the user successfully signs up, the failure state when they fill out information that does not meet the requirements, or the loading state. By the time I noticed this, my Figma was too messy and it was a pain to reorganize stuff and figure out what's to go next from the current state.
+
+If I were to do it again, this is the flow I would follow:
+
+- **Question**: Apart from authentication, what does it mean to have a great signup user experience? This is important because this is the only friction the users must experience before being able to explore the product features. I myself dropped the signups so many times because the flow was too lengthy and complicated.
+- The user experience and interface is determined by the **framing of the problem**. Am I trying to solve the problem of users not finishing the signup phase, hence not even using/pay for the product? Or am I trying to create a seamless signup experience only?
+- **Pen & Paper**: Before opening Figma, I will brainstorm my thoughts on paper and try to think about the **flow from end to end** (start to successful or failed signup). Oftentimes, the flow and interactivity is more time-consuming to plan than the interface design itself.
 
 ## Inspiration
 

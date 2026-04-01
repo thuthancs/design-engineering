@@ -61,6 +61,8 @@ export default function Home() {
                 alt={project.preview.alt}
                 width={project.preview.width}
                 height={project.preview.height}
+                unoptimized={project.preview.unoptimized}
+                cropModalFrame={project.preview.cropModalFrame}
                 hoverLabel={`Day ${project.day} — ${project.title}`}
                 wrapClassName={styles.modalWrap}
                 className={styles.projectPreview}

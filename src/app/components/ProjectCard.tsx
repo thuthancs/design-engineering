@@ -14,6 +14,9 @@ export type ProjectCardProps = {
   className?: string;
   wrapClassName?: string;
   priority?: boolean;
+  unoptimized?: boolean;
+  /** Crop to 448×515 modal frame (matches signup_modal.svg). */
+  cropModalFrame?: boolean;
 };
 
 export function ProjectCard({
@@ -25,6 +28,8 @@ export function ProjectCard({
   className,
   wrapClassName,
   priority = false,
+  unoptimized = false,
+  cropModalFrame = false,
 }: ProjectCardProps) {
   const [active, setActive] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -60,8 +65,11 @@ export function ProjectCard({
         alt={alt}
         width={width}
         height={height}
-        className={[styles.image, className].filter(Boolean).join(" ")}
+        className={[styles.image, cropModalFrame && styles.imageCropModal, className]
+          .filter(Boolean)
+          .join(" ")}
         priority={priority}
+        unoptimized={unoptimized}
       />
       <div
         className={`${styles.dimOverlay} ${active ? styles.dimOverlayVisible : ""}`}
