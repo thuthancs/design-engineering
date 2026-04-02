@@ -26,7 +26,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: "Project" };
   }
   return {
-    title: `Day ${project.day} - ${project.title}`,
+    title: project.metaEyebrow
+      ? `${project.title} — ${project.metaEyebrow}`
+      : `Day ${project.day} - ${project.title}`,
     description: project.summary,
   };
 }
@@ -62,7 +64,8 @@ export default async function ProjectPage({ params }: Props) {
       <main className={styles.main}>
         <header className={styles.header}>
           <p className={styles.day}>
-            Day {project.day} - {project.dateLabel}
+            {project.metaEyebrow ??
+              `Day ${project.day} - ${project.dateLabel}`}
           </p>
           <h1 className={styles.title}>{project.title}</h1>
           {project.inlinePreview ? (
@@ -92,7 +95,17 @@ export default async function ProjectPage({ params }: Props) {
           <p className={styles.summary}>{project.summary}</p>
         </header>
 
-        <figure className={styles.figure}>
+        <figure
+          className={[
+            styles.figure,
+            !project.detailGallery?.length &&
+            project.preview.containHeightMatchSignup
+              ? styles.figureCoverPreview
+              : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+        >
           {project.detailGallery && project.detailGallery.length > 0 ? (
             <>
               <div className={styles.previewRow}>
@@ -124,7 +137,13 @@ export default async function ProjectPage({ params }: Props) {
               height={project.preview.height}
               className={[
                 styles.preview,
-                project.preview.cropModalFrame && projectCardStyles.imageCropModal,
+                project.preview.detailFullWidth && styles.previewDetailFull,
+                project.preview.containHeightMatchSignup
+                  ? [
+                      projectCardStyles.imageContainHeight,
+                      styles.previewWide,
+                    ].join(" ")
+                  : project.preview.cropModalFrame && projectCardStyles.imageCropModal,
               ]
                 .filter(Boolean)
                 .join(" ")}

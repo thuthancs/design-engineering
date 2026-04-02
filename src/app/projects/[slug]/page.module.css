@@ -135,6 +135,19 @@
   margin: 0 0 clamp(40px, 6vh, 56px);
 }
 
+.figureCoverPreview {
+  position: relative;
+  height: 515px;
+  width: 100%;
+  max-width: none;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.figureCoverPreview .preview {
+  max-width: none;
+}
+
 .previewRow {
   display: flex;
   flex-direction: row;
@@ -168,6 +181,16 @@
   max-width: 448px;
   height: auto;
   border-radius: 8px;
+}
+
+.previewDetailFull {
+  max-width: 100%;
+}
+
+/** With imageContainHeight on cover previews: fill the figure (see .figureCoverPreview). */
+.previewWide {
+  width: 100%;
+  max-width: none;
 }
 
 .contentSection {

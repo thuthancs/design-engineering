@@ -1,7 +1,7 @@
 "use client";
 
 import Image, { type StaticImageData } from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback, useState, type CSSProperties } from "react";
 import styles from "./ProjectCard.module.css";
 
 export type ProjectCardProps = {
@@ -17,6 +17,12 @@ export type ProjectCardProps = {
   unoptimized?: boolean;
   /** Crop to 448×515 modal frame (matches signup_modal.svg). */
   cropModalFrame?: boolean;
+  /** 515px-tall full-width frame like signup; image uses object-fit: cover. */
+  containHeightMatchSignup?: boolean;
+  /** When used with containHeightMatchSignup, scales the image (>1 zooms in / crops edges). */
+  containHeightZoom?: number;
+  /** Wide art at natural aspect ratio (no 515px cover crop). */
+  naturalAspectSheet?: boolean;
 };
 
 export function ProjectCard({
@@ -30,6 +36,9 @@ export function ProjectCard({
   priority = false,
   unoptimized = false,
   cropModalFrame = false,
+  containHeightMatchSignup = false,
+  containHeightZoom = 1,
+  naturalAspectSheet = false,
 }: ProjectCardProps) {
   const [active, setActive] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -55,7 +64,24 @@ export function ProjectCard({
 
   return (
     <div
-      className={[styles.wrap, wrapClassName].filter(Boolean).join(" ")}
+      className={[
+        styles.wrap,
+        naturalAspectSheet && styles.wrapNaturalSheet,
+        containHeightMatchSignup && styles.wrapContainHeight,
+        containHeightMatchSignup &&
+          containHeightZoom !== 1 &&
+          styles.wrapContainHeightZoomed,
+        wrapClassName,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      style={
+        containHeightMatchSignup && containHeightZoom !== 1
+          ? ({
+              ["--contain-height-zoom" as string]: String(containHeightZoom),
+            } as CSSProperties)
+          : undefined
+      }
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
       onMouseMove={onMove}
@@ -65,7 +91,15 @@ export function ProjectCard({
         alt={alt}
         width={width}
         height={height}
-        className={[styles.image, cropModalFrame && styles.imageCropModal, className]
+        className={[
+          styles.image,
+          !containHeightMatchSignup &&
+            !naturalAspectSheet &&
+            cropModalFrame &&
+            styles.imageCropModal,
+          containHeightMatchSignup && styles.imageContainHeight,
+          className,
+        ]
           .filter(Boolean)
           .join(" ")}
         priority={priority}

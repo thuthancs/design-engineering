@@ -1,4 +1,5 @@
-import sunsetClockGif from "@/app/assets/sunset_clock.gif";
+import poemPocketGif from "@/app/assets/projects/poem-pocket/poem-pocket-preview.gif";
+import sunsetClockGif from "@/app/assets/projects/sunset-clock/sunset_clock.gif";
 import type { StaticImageData } from "next/image";
 
 /**
@@ -14,10 +15,14 @@ export type PlaygroundProject = {
   previewAlt?: string;
   /** Crop preview to the same 448×515 frame as design-engineering signup modal. */
   cropModalFrame?: boolean;
+  /** 515px-tall full-width column frame; image uses object-fit cover (wide previews). */
+  containHeightMatchSignup?: boolean;
+  /** Zoom factor for contain-height previews (>1 crops edges, subject appears larger). */
+  containHeightZoom?: number;
   /** Set true for GIFs so animation is preserved (Next/Image). */
   unoptimized?: boolean;
-  /** External URL (opens in a new tab). */
-  href: string;
+  /** External URL (opens in a new tab). Omit when there is no live demo yet. */
+  href?: string;
   /** Optional longer blurb for notes / future use (not shown on the grid). */
   description?: string;
 };
@@ -34,5 +39,18 @@ export const playgroundProjects: PlaygroundProject[] = [
     cropModalFrame: true,
     unoptimized: true,
     href: "https://dock-wad-57535631.figma.site/",
+  },
+  {
+    id: "poem-pocket",
+    title: "Poem Pocket",
+    description:
+      "A two-page digital notebook with soft gradients and handwritten-style type — a quiet place to draft lines.",
+    preview: poemPocketGif,
+    previewAlt:
+      "Poem Pocket — open notebook spread with placeholder line and page numbers",
+    containHeightMatchSignup: true,
+    containHeightZoom: 1.14,
+    unoptimized: true,
+    href: "https://www.figma.com/make/YrNbAXDgPa96PNyMzCK91f/Poem?t=oRL58W3O8qvaH9bJ-1",
   },
 ];

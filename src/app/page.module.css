@@ -92,20 +92,47 @@
 
 .projectsList {
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(28px, 4vh, 40px);
   margin: 0;
   padding: 0;
+  display: grid;
+  gap: clamp(28px, 4vh, 40px);
+  grid-template-columns: 1fr;
+  justify-content: start;
+}
+
+@media (min-width: 720px) {
+  .projectsList {
+    /* Signup stays natural width; credit / wide previews fill the rest of the row */
+    grid-template-columns: max-content minmax(0, 1fr);
+    column-gap: clamp(24px, 4vw, 48px);
+    row-gap: clamp(28px, 4vh, 40px);
+    align-items: stretch;
+  }
+
+  /**
+   * Wide-only lists (e.g. /illustration): a single contain-height card in column 1
+   * would get max-content width ~0 because the preview has no in-flow intrinsic width.
+   * Span the full row so width: 100% resolves to the page content width.
+   */
+  .projectsListFullRow > .projectsItem {
+    grid-column: 1 / -1;
+  }
 }
 
 .projectsItem {
   margin: 0;
   padding: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .projectLink {
-  display: block;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-height: 515px;
+  width: 100%;
   text-decoration: none;
   color: inherit;
   outline: none;
@@ -115,6 +142,12 @@
   outline: 2px solid #1fad60;
   outline-offset: 4px;
   border-radius: 4px;
+}
+
+/** Illustration previews use in-flow height; drop the 515px min from design-engineering grid. */
+.illustrationProjectLink {
+  min-height: 0;
+  align-items: flex-start;
 }
 
 .modalWrap {

@@ -1,4 +1,4 @@
-import { getAllProjects } from "@/data/projects";
+import { getHomepageProjects } from "@/data/projects";
 import Image from "next/image";
 import Link from "next/link";
 import basicShapes from "./assets/basic_shapes.svg";
@@ -6,7 +6,7 @@ import { ProjectCard } from "./components/ProjectCard";
 import styles from "./page.module.css";
 
 export default function Home() {
-  const projects = getAllProjects();
+  const projects = getHomepageProjects();
 
   return (
     <div className={styles.page}>
@@ -44,16 +44,11 @@ export default function Home() {
           >
             GITHUB
           </a>
-          <a
-            className={styles.navLink}
-            href="https://www.thuinanutshell.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            WEBSITE
-          </a>
           <Link className={styles.navLink} href="/playground">
             PLAYGROUND
+          </Link>
+          <Link className={styles.navLink} href="/illustration">
+            ILLUSTRATION
           </Link>
         </nav>
       </div>
@@ -73,6 +68,9 @@ export default function Home() {
                 height={project.preview.height}
                 unoptimized={project.preview.unoptimized}
                 cropModalFrame={project.preview.cropModalFrame}
+                containHeightMatchSignup={
+                  project.preview.containHeightMatchSignup ?? false
+                }
                 hoverLabel={`Day ${project.day} — ${project.title}`}
                 wrapClassName={styles.modalWrap}
                 className={styles.projectPreview}

@@ -1,9 +1,11 @@
-import desktopSignup from "@/app/assets/desktop_signup.png";
-import mobileSignup from "@/app/assets/mobile_signup.png";
-import signupModal from "@/app/assets/signup_modal.svg";
-import signupPreviewGif from "@/app/assets/signup_preview.gif";
-import signupV0 from "@/app/assets/signup_v0.svg";
-import signupV1 from "@/app/assets/signup_v1.svg";
+import creditCardCheckoutPreview from "@/app/assets/projects/credit-card-checkout/credit-card-checkout-preview.gif";
+import mandySketch from "@/app/assets/projects/mandy/mandy-sketch.png";
+import desktopSignup from "@/app/assets/projects/signup-page/desktop_signup.png";
+import mobileSignup from "@/app/assets/projects/signup-page/mobile_signup.png";
+import signupModal from "@/app/assets/projects/signup-page/signup_modal.svg";
+import signupPreviewGif from "@/app/assets/projects/signup-page/signup_preview.gif";
+import signupV0 from "@/app/assets/projects/signup-page/signup_v0.svg";
+import signupV1 from "@/app/assets/projects/signup-page/signup_v1.svg";
 import type { StaticImageData } from "next/image";
 
 export type ProjectPreview = {
@@ -18,6 +20,13 @@ export type ProjectPreview = {
    * Set width/height to 448 and 515 when using this.
    */
   cropModalFrame?: boolean;
+  /**
+   * Full-width preview in a 515px-tall frame (same height as signup crop), object-fit: cover.
+   * Use for wide mockups; set cropModalFrame to false.
+   */
+  containHeightMatchSignup?: boolean;
+  /** Detail page hero: use full main column width instead of the 448px phone cap. */
+  detailFullWidth?: boolean;
 };
 
 /** Anchor id must be URL-safe (used in #hash links). */
@@ -45,8 +54,12 @@ export type SectionInlinePreviewBlock = {
 export type Project = {
   slug: string;
   day: number;
-  /** Shown after the day, e.g. "30 MARCH 2026". */
+  /** Shown after the day, e.g. "30 MARCH 2026". Ignored when `metaEyebrow` is set. */
   dateLabel: string;
+  /** Replaces the default "Day N — date" line (e.g. status only). */
+  metaEyebrow?: string;
+  /** When false, project is omitted from the homepage grid but keeps /projects/[slug]. */
+  showOnHomepage?: boolean;
   title: string;
   summary: string;
   preview: ProjectPreview;
@@ -191,10 +204,81 @@ Instead of repeating myself, I could create a component with those variants and 
       },
     ],
   },
+  {
+    slug: "credit-card-checkout",
+    day: 2,
+    dateLabel: "31 MARCH 2026",
+    title: "Credit Card Checkout",
+    summary:
+      "A review-your-order screen with cart line items, promo code, totals, and a clear path to payment — Daily UI checkout exploration.",
+    preview: {
+      src: creditCardCheckoutPreview,
+      width: 3012,
+      height: 1558,
+      alt: "Credit card checkout — review order with cart items and payment CTA",
+      unoptimized: true,
+      cropModalFrame: false,
+      containHeightMatchSignup: true,
+    },
+    sections: [
+      {
+        id: "overview",
+        title: "Overview",
+        paragraphs: [
+          "This challenge focuses on the moment before payment: reviewing what is in the cart, understanding discounts and fees, and feeling confident to continue. The layout pairs a scannable list of products on the left with a compact order summary and primary action on the right.",
+        ],
+      },
+      {
+        id: "design-decisions",
+        title: "Design decisions",
+        paragraphs: [
+          "High-contrast typography for the page title and total keeps hierarchy obvious. Line items use a card pattern so quantity and remove actions stay aligned without crowding the product copy. The promo field and apply control sit above the breakdown so users see savings before tax and delivery.",
+        ],
+      },
+      {
+        id: "reflection",
+        title: "Reflection",
+        paragraphs: [
+          "Checkout is rarely “one screen” in the real world — error states, empty carts, and payment method selection all deserve the same clarity. This mockup is a baseline for that story.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "mandy",
+    day: 3,
+    dateLabel: "",
+    metaEyebrow: "IN PROGRESS",
+    showOnHomepage: false,
+    title: "Mandy",
+    summary:
+      "Character concept sheet for Mandy - someone who I'd love to be friends with.",
+    preview: {
+      src: mandySketch,
+      width: 3300,
+      height: 2550,
+      alt: "Mandy character sheet — full body and expression sketches with handwritten labels",
+      detailFullWidth: true,
+    },
+    sections: [
+      {
+        id: "overview",
+        title: "Overview",
+        paragraphs: [
+          "On a random rainy day at my favourite cafe in SF, I thought of Mandy. Mandy is a nerdy girl who loves reading and learning about many things that pique her interest. But she is also fun to be around because of her quirkiness and great sense of humor. Mandy is a casual person whose favourite clothes are a sweater and a pair of jeans. Mandy represents those are smart but chill and very hilarious.",
+        ],
+      },
+    ],
+  },
 ];
 
 export function getAllProjects(): Project[] {
   return [...projects].sort((a, b) => a.day - b.day);
+}
+
+/** Design-engineering homepage grid only (excludes illustration-only entries). */
+export function getHomepageProjects(): Project[] {
+  return getAllProjects().filter((p) => p.showOnHomepage !== false);
 }
 
 export function getProjectBySlug(slug: string): Project | undefined {
