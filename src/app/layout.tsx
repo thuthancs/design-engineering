@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
-import { Crimson_Pro } from "next/font/google";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
+import type { Metadata } from "next";
+import { Crimson_Pro } from "next/font/google";
 import "./globals.css";
 
 const crimsonPro = Crimson_Pro({
@@ -26,7 +26,16 @@ export default function RootLayout({
       lang="en"
       className={`${crimsonPro.variable} ${GeistMono.variable} ${GeistSans.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <div className="site-shell">
+          <div className="site-content">{children}</div>
+          <footer className="site-footer" role="contentinfo">
+            <p className="site-footerText">
+              MADE WITH 💛 AND LOTS OF COFFEE BY THU THAN
+            </p>
+          </footer>
+        </div>
+      </body>
     </html>
   );
 }
