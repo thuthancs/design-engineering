@@ -265,7 +265,7 @@ Instead of repeating myself, I could create a component with those variants and 
         id: "overview",
         title: "Overview",
         paragraphs: [
-          "On a random rainy day at my favourite cafe in SF on April's Fool 2026, I thought of Mandy. Mandy is a nerdy girl who loves reading and learning about many things that pique her interest. But she is also fun to be around because of her quirkiness and great sense of humor. Mandy is a casual person whose favourite clothes are a sweater and a pair of jeans. Mandy represents those are smart but chill and very hilarious.",
+          "On a random rainy day at my favourite cafe in SF on April's Fool 2026, I thought of Mandy. Mandy is a nerdy girl who loves reading and learning about many things that pique her interest. But she is also fun to be around because of her quirkiness and great sense of humor. Mandy is a casual person whose favourite clothes are a sweater and a pair of jeans. Mandy represents those who are smart but chill and very hilarious.",
         ],
       },
     ],

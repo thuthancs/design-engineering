@@ -27,7 +27,7 @@ export default function IllustrationPage() {
       </div>
 
       <ul
-        className={`${homeStyles.projectsList} ${homeStyles.projectsListFullRow}`}
+        className={`${homeStyles.projectsList} ${homeStyles.illustrationProjectsList}`}
       >
         {illustrationProjects.map((project, index) => {
           const width = project.cropModalFrame ? 448 : project.preview.width;
@@ -40,7 +40,9 @@ export default function IllustrationPage() {
               height={height}
               hoverLabel={project.title}
               wrapClassName={
-                project.naturalAspectSheet ? undefined : homeStyles.modalWrap
+                project.illustrationEqualHeight || project.naturalAspectSheet
+                  ? undefined
+                  : homeStyles.modalWrap
               }
               className={homeStyles.projectPreview}
               priority={index === 0}
@@ -51,6 +53,12 @@ export default function IllustrationPage() {
               }
               containHeightZoom={project.containHeightZoom ?? 1}
               naturalAspectSheet={project.naturalAspectSheet ?? false}
+              illustrationEqualHeight={
+                project.illustrationEqualHeight ?? false
+              }
+              illustrationAnchorLeft={
+                project.illustrationAnchorLeft ?? false
+              }
             />
           );
           const linkClass = `${homeStyles.projectLink} ${homeStyles.illustrationProjectLink}`;

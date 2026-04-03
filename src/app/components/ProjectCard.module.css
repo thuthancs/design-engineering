@@ -13,6 +13,35 @@
   margin-inline: auto;
 }
 
+/**
+ * /illustration grid: shared frame height; contain keeps full image (letterbox, no crop).
+ */
+.wrap.wrapIllustrationEqualHeight {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  height: clamp(300px, min(48vw, 52vh), 520px);
+  overflow: hidden;
+  border-radius: 8px;
+  /* Match page background so letterboxing from object-fit: contain is invisible */
+  background: #ffffff;
+}
+
+.image.imageIllustrationEqualHeight {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  object-position: center;
+}
+
+.image.imageIllustrationEqualHeight.imageIllustrationAnchorLeft {
+  object-position: left center;
+}
+
 .wrap:focus-visible {
   outline: 2px solid #1fad60;
   outline-offset: 4px;

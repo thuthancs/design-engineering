@@ -23,6 +23,10 @@ export type ProjectCardProps = {
   containHeightZoom?: number;
   /** Wide art at natural aspect ratio (no 515px cover crop). */
   naturalAspectSheet?: boolean;
+  /** Fixed-height frame, full image visible (object-fit contain / letterbox). */
+  illustrationEqualHeight?: boolean;
+  /** When illustrationEqualHeight: bias art toward the left (tighter read with neighbors). */
+  illustrationAnchorLeft?: boolean;
 };
 
 export function ProjectCard({
@@ -39,6 +43,8 @@ export function ProjectCard({
   containHeightMatchSignup = false,
   containHeightZoom = 1,
   naturalAspectSheet = false,
+  illustrationEqualHeight = false,
+  illustrationAnchorLeft = false,
 }: ProjectCardProps) {
   const [active, setActive] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -66,7 +72,8 @@ export function ProjectCard({
     <div
       className={[
         styles.wrap,
-        naturalAspectSheet && styles.wrapNaturalSheet,
+        illustrationEqualHeight && styles.wrapIllustrationEqualHeight,
+        naturalAspectSheet && !illustrationEqualHeight && styles.wrapNaturalSheet,
         containHeightMatchSignup && styles.wrapContainHeight,
         containHeightMatchSignup &&
           containHeightZoom !== 1 &&
@@ -93,8 +100,13 @@ export function ProjectCard({
         height={height}
         className={[
           styles.image,
+          illustrationEqualHeight && styles.imageIllustrationEqualHeight,
+          illustrationEqualHeight &&
+            illustrationAnchorLeft &&
+            styles.imageIllustrationAnchorLeft,
           !containHeightMatchSignup &&
             !naturalAspectSheet &&
+            !illustrationEqualHeight &&
             cropModalFrame &&
             styles.imageCropModal,
           containHeightMatchSignup && styles.imageContainHeight,
