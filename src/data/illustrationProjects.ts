@@ -1,3 +1,4 @@
+import bunBoHueIllo from "@/app/assets/projects/illo/bun-bo-hue.png";
 import mandarinIllo from "@/app/assets/projects/illo/mandarin.png";
 import mandySketch from "@/app/assets/projects/mandy/mandy-sketch.png";
 import type { StaticImageData } from "next/image";
@@ -46,6 +47,17 @@ export const illustrationProjects: IllustrationProject[] = [
     preview: mandarinIllo,
     previewAlt:
       "Mandarin illustration — whole fruit, peeled segments, handwritten mandarin (quả quýt)",
+    illustrationEqualHeight: true,
+    illustrationAnchorLeft: true,
+  },
+  {
+    id: "bun-bo-hue",
+    title: "Bún Bò Huế",
+    description:
+      "Spicy beef noodle soup with garnishes — colored pencil style on white.",
+    preview: bunBoHueIllo,
+    previewAlt:
+      "Bún Bò Huế illustration — bowl of noodles and broth with side plate of herbs and garnish",
     illustrationEqualHeight: true,
     illustrationAnchorLeft: true,
   },
